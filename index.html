@@ -19,7 +19,7 @@
       initialize();
     });
 
-    var strikeTable = [];
+    var strikeTable = [['Lat', 'Lon', 'Town', 'Deaths']];
 
     function buildStrikeTable(strikes) {
       strikes.map(function(strike){
@@ -31,11 +31,7 @@
           $('#information').append('<p style="color:red;">' + new Date(strike.date).getFullYear() + ' - ' + strike.location + ', ' + strike.country + '</p>');
           $('#information').append('<p style="color:blue;">' + strike.narrative + '</p>');
 
-          var the_strike = [parseFloat(strike.lat), parseFloat(strike.lon), strike.deaths_max];
-
-          console.log(the_strike);
-
-         strikeTable.push(the_strike);
+         strikeTable.push([parseFloat(strike.lat), parseFloat(strike.lon), strike.deaths_max, 123]);
         }
       });
     }
