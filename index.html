@@ -31,7 +31,11 @@
           $('#information').append('<p style="color:red;">' + new Date(strike.date).getFullYear() + ' - ' + strike.location + ', ' + strike.country + '</p>');
           $('#information').append('<p style="color:blue;">' + strike.narrative + '</p>');
 
-         strikeTable.push([parseFloat(strike.lat), parseFloat(strike.lon), strike.location]);
+          var the_strike = [parseFloat(strike.lat), parseFloat(strike.lon), strike.deaths_max];
+
+          console.log(the_strike);
+
+         strikeTable.push(the_strike);
         }
       });
     }
@@ -42,31 +46,43 @@
       google.charts.setOnLoadCallback(drawRegionsMap);
 
       function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable(strikeTable);
+        // var data = new google.visualization.DataTable();
+        //     data.addColumn('number', 'Latitude');
+        //     data.addColumn('number', 'Longitude');
+        //     data.addColumn('string', 'Value');
 
-        var data = new google.visualization.DataTable();
-            data.addColumn('number', 'Latitude');
-            data.addColumn('number', 'Longitude');
-            data.addColumn('string', 'Label');
-
-            data.addRows(strikeTable);
+        //     data.addRows(strikeTable);
 
         var options = {
-          // region: '145',
-          region: 'world',
+          region: 'YE',
+          // region: 'world',
           displayMode: 'markers',
-          colorAxis: {colors: ['green', 'blue']}
+          colorAxis: {colors: ['green', 'blue']},
+          backgroundColor: {fill: 'lightsteelblue'}
+        };
+
+        var options2 = {
+          region: 'PK',
+          // region: 'world',
+          displayMode: 'markers',
+          colorAxis: {colors: ['green', 'blue']},
+          backgroundColor: {fill: 'lightsteelblue'}
         };
 
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        var chart2 = new google.visualization.GeoChart(document.getElementById('regions_div2'));
 
         chart.draw(data, options);
+        chart2.draw(data, options2);
       }
 
     }
     </script>
   </head>
   <body>
-    <div id="regions_div" style="width: 900px; height: 500px; float: left;"></div>
-    <div id="information" style="width: 500px; height: 500px; float: left;"></div>
+    <div id="regions_div" style="width: 50%; height: 500px; float: left;"></div>
+    <div id="regions_div2" style="width: 50%; height: 500px; float: left;"></div>
+    <div id="information" style="width: 50%; height: 500px; float: left;"></div>
   </body>
 </html>
